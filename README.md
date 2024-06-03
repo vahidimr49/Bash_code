@@ -1,9 +1,10 @@
-#myproject:
 
-whats the program?
+#################################################################################
+#BASH Code:
+
+exersise for improving bash developing 
 
 #how to:
-#####################
-....
-test
-#Contributions:
+solving Operating system  issue with bash script 
+
+#################################################################################
