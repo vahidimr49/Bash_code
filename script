@@ -1,12 +1,7 @@
 #!/usr/bin/bash
+n=0
+for i in {1..10}; do
+    ((n++))
+	echo "n: $n"
+done
 
-read -sp "Enter Pass: " pass
-echo -ne "\n"
-
-if [[ ${#pass} -lt 8 ]]; then
-
-	echo  "Invalid Password"
-else
-	echo  "Valid Password"
-
-fi
