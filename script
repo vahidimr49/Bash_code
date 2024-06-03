@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+read -sp "Enter Pass: " pass
+echo -ne "\n"
+
+if [[ ${#pass} -lt 8 ]]; then
+
+	echo  "Invalid Password"
+else
+	echo  "Valid Password"
+
+fi
