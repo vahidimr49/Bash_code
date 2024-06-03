@@ -1,10 +1,8 @@
 #!/usr/bin/bash
 
-echo "Select the operation: "
+read -p "Enter Opration(backup/restore/delete): " op
 
-select op in backup restore delete "exit"; do
-
- case $op in 
+case $op in 
  backup)
   echo "going to take backup."
 ;;
@@ -17,8 +15,6 @@ delete)
   echo "going to delete a back up"
 ;;
 
-"exit")
-  exit 0
- esac
- 
-done
+*)
+  echo "operation is not defined"
+esac
