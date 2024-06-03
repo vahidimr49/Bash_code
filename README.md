@@ -5,6 +5,6 @@
 exersise for improving bash developing 
 
 #how to:
-solving Operating system  issue with bash script 
+solving Operating system  issue with bash scripting 
 
 #################################################################################
