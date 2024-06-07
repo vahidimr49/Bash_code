@@ -1,0 +1,35 @@
+#!/usr/bin/bash
+
+function usage {
+
+cat <<EOF
+$0 <options> <path>
+  --db <file> --> Database file
+EOF
+}
+
+if [[ $# -gt 1  ]]; then
+
+usage
+fi
+DB_FILE="default.db"
+SCAN_PATH=""
+while [[ $# -ne 1 ]]; do
+  case $1 in 
+   --db)
+	DB_FILE=$2
+	shift 2
+	;;
+   *)
+	echo "this options is not defined"
+	exit 1
+	;;
+esac
+if [[ $# -ne 1 ]]; then
+echo "Error: Path is required."
+exit 1
+N_PATH=$1
+fi
+done  
+echo $DB_FILE
+echo $1
