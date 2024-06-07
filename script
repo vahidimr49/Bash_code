@@ -1,24 +1,67 @@
-#!/usr/bin/bash
+#!/bin/bash
 
-echo "Select the operation: "
+DATABASE="file_database.txt"
 
-select op in backup restore delete "exit"; do
+# Function to scan directory and save hashes
+scan_directory() {
+    echo "Enter directory to scan:"
+    read directory
+    if [ -d "$directory" ]; then
+        > $DATABASE
+        find "$directory" -type f | while read -r file; do
+            md5sum "$file" >> $DATABASE
+        done
+        echo "Hashes saved to $DATABASE"
+    else
+        echo "Directory does not exist."
+    fi
+}
 
- case $op in 
- backup)
-  echo "going to take backup."
-;;
+# Function to check file integrity
+check_integrity() {
+    if [ ! -f $DATABASE ]; then
+        echo "Database file does not exist. Please scan a directory first."
+        return
+    fi
 
-restore)
-  echo "going to restore the backup."
-;;
+    echo "Checking file integrity..."
+    while read -r line; do
+        hash=$(echo "$line" | awk '{print $1}')
+        file=$(echo "$line" | awk '{print $2}')
+        if [ -f "$file" ]; then
+            current_hash=$(md5sum "$file" | awk '{print $1}')
+            if [ "$hash" != "$current_hash" ]; then
+                echo "File changed: $file"
+            fi
+        else
+            echo "File missing: $file"
+        fi
+    done < $DATABASE
+    echo "Integrity check complete."
+}
 
-delete)
-  echo "going to delete a back up"
-;;
+# Main menu
+while true; do
+    echo "Select an option:"
+    echo "1. Scan directory and save hashes"
+    echo "2. Check file integrity"
+    echo "3. Exit"
+    read -p "Enter choice [1-3]: " choice
 
-"exit")
-  exit 0
- esac
- 
+    case $choice in
+        1)
+            scan_directory
+            ;;
+        2)
+            check_integrity
+            ;;
+        3)
+            echo "Exiting..."
+            exit 0
+            ;;
+        *)
+            echo "Invalid option, please choose again."
+            ;;
+    esac
 done
+
